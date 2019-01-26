@@ -86,7 +86,7 @@ def get_with_auth(url):
     return get(url, auth=RQ_AUTH).json()
 
 def post_data_with_auth(url, args):
-    pass
+    return post(url, auth=RQ_AUTH, data=args)
 
 def delete_with_auth(url):
     return delete(url, auth=RQ_AUTH).status_code
