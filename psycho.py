@@ -71,7 +71,7 @@ def main_loop(source_num, dest_num, used_nums):
             # prevent bullshit
             sleep(0.5)
     except KeyboardInterrupt:
-        yn = input('Change phone number and continue? [y/n]')
+        yn = input('\nChange phone number and continue? [y/n]')
         if yn.lower() == 'y':
             main_loop(source_num, dest_num, used_nums)
         else:
