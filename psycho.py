@@ -1,4 +1,3 @@
-import urllib3
 from requests import get, post, delete
 from requests.auth import HTTPBasicAuth
 from os import environ
