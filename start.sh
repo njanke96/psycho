@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Example startscript (bash shells)
+
+TWILIO_SID=YOUR_SID_HERE
+TWILIO_TOKEN=YOUR_TOKEN_HERE
+
+# optional
+#PSYCHO_NUMBER = YOUR_PHONE_NUMBER
+#PSYCHO_TARGET = DESTINATION_PHONE_NUMBER
+
+python psycho.py
