@@ -24,4 +24,13 @@ TODO: windows batch script
 
 ## Usage
 
-Start the script with `bash start.sh` and enjoy. Ctrl+C will cause the program to ask if you would like to use a new number. The next unused number on your account will be used.
+Start the script with `bash start.sh` and enjoy. Text the number listed after 'Using twilio number' from your phone to have your messages forwarded to the target phone number. Ctrl+C will cause the program to ask if you would like to use a new number. The next unused number on your account will be used.
+
+## Sample output
+
+```
+Target: +11234567890
+Using twilio number: +16131122233
+Forwarded "How bout now" from <+12501234567> to <+11234567890>
+Forwarded "How bout now" from <+12501234567> to <+11234567890>
+```
