@@ -31,6 +31,7 @@ Start the script with `bash start.sh` and enjoy. Text the number listed after 'U
 ```
 Target: +11234567890
 Using twilio number: +16131122233
-Forwarded "How bout now" from <+12501234567> to <+11234567890>
-Forwarded "How bout now" from <+12501234567> to <+11234567890>
+Forwarded "Hey bb it's me" from <+12501234567> to <+11234567890>
+Forwarded "You're crazy, I'm calling the police" from <+11234567890> to <+12501234567>
+Forwarded "Don't you love me anymore?" from <+12501234567> to <+11234567890>
 ```
