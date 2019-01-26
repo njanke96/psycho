@@ -19,7 +19,7 @@ def main():
     except KeyError:
         source_num = input('Enter your phone number: ')
 
-    # prompt the destination number if it wasn't specified as an environment var
+    # prompt the target number if it wasn't specified as an environment var
     try:
         dest_num = environ['PSYCHO_TARGET']
     except KeyError:
