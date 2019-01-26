@@ -41,9 +41,11 @@ def main_loop(source_num, dest_num, used_nums):
         print('Using twilio number: {}'.format(current_num))
 
         while True:
+            get_messages_url = '{}/Accounts/{}/Messages.json?From={}'
+
             # check messages from the target
             from_num = '%2B' + dest_num[1:]
-            msgs = get_with_auth('{}/Accounts/{}/Messages.json?From={}'.format(
+            msgs = get_with_auth(get_messages_url.format(
                                  TWILIO_BASE, TWILIO_SID, from_num))
             
             # we only care about page 1 since we remove msgs after reading them
@@ -53,11 +55,11 @@ def main_loop(source_num, dest_num, used_nums):
             msgs = msgs['messages']
 
             # forward messages from our target to the user
-            process_incomming_messages(msgs, current_num, source_num)
+            process_messages(msgs, current_num, source_num)
             
             # check messages from our user
             from_num = '%2B' + source_num[1:]
-            msgs = get_with_auth('{}/Accounts/{}/Messages.json?From={}'.format(
+            msgs = get_with_auth(get_messages_url.format(
                                  TWILIO_BASE, TWILIO_SID, from_num))
 
             if get_msg_response_condition(msgs):
@@ -66,7 +68,23 @@ def main_loop(source_num, dest_num, used_nums):
             msgs = msgs['messages']
 
             # descreetly forward messages from our user to the target
-            process_incomming_messages(msgs, current_num, dest_num, True)
+            process_messages(msgs, current_num, dest_num, True)
+
+            # check outgoing messages from twilio
+            from_num = '%2B' + current_num[1:]
+            msgs = get_with_auth(get_messages_url.format(
+                                 TWILIO_BASE, TWILIO_SID, from_num))
+
+            if get_msg_response_condition(msgs):
+                continue
+
+            msgs = msgs['messages']
+            for msg in msgs:
+                # process twilio's outbound messages
+                if msg['direction'] != 'inbound':
+                    if msg['status'] not in ['accepted', 'queued', 'sending', 'receiving']:
+                        delete_with_auth('{}/Accounts/{}/Messages/{}.json'.format(
+                            TWILIO_BASE, TWILIO_SID, msg['sid']))
 
             # prevent bullshit
             sleep(0.5)
@@ -78,7 +96,7 @@ def main_loop(source_num, dest_num, used_nums):
             exit(0)
 
 def get_msg_response_condition(msgs):
-    return msgs is None or 'messages' not in msgs or not msgs['messages']
+    return msgs is None or 'messages' not in msgs
 
 # Http Helper functions
 
@@ -93,17 +111,11 @@ def delete_with_auth(url):
 
 ##
 
-def process_incomming_messages(msgs, from_num, to_num, discreet=False):
+def process_messages(msgs, from_num, to_num, discreet=False):
     for msg in msgs:
-        # ignore outbound messages, delete them if they aren't being sent
-        if msg['direction'] is not 'inbound':
-            if msg['status'] not in ['accepted', 'queued', 'sending', 'receiving']:
-                delete_with_auth('{}/Accounts/{}/Messages/{}.json'.format(
-                    TWILIO_BASE, TWILIO_SID, msg['sid']))
-
-                continue
-            else:
-                continue
+        # ignore outbound messages, they should never be here though
+        if msg['direction'] != 'inbound':
+            continue
 
         # forward incomming
         if not discreet:
@@ -121,6 +133,9 @@ def process_incomming_messages(msgs, from_num, to_num, discreet=False):
         # delete it
         delete_with_auth('{}/Accounts/{}/Messages/{}.json'.format(
             TWILIO_BASE, TWILIO_SID, msg['sid']))
+
+        # log it
+        print('Forwarded "{}" from <{}> to <{}>'.format(msg['body'], msg['from'], to_num))
 
 
 def new_twilio_number(used_nums):
