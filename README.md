@@ -2,7 +2,7 @@
 
 The perfect python script for the psycho ex-girlfriend.  
 
-It's a script using twilio to send messages as someone else, in case they have blocked your number. I made this to learn the twilio api.
+It's a script using twilio to send messages as someone else, in case he (or she) has blocked your number. I made this to learn the twilio api.
 
 ## Setting up
 
