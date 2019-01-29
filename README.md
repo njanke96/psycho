@@ -2,7 +2,7 @@
 
 Simple twilio phone number proxy..  
 
-It's a script using twilio to send messages as someone else, in case you don't want to reveal your phone number, or are blocked.
+It's a script using twilio to send sms as someone else, in case you don't want to reveal your phone number, or are blocked.
 
 ## Setting up
 
