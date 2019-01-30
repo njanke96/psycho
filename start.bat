@@ -1,0 +1,11 @@
+@echo off
+
+:: Example startscript (batch)
+SET TWILIO_SID="YOUR_SID_HERE"
+SET TWILIO_TOKEN="YOUR_TOKEN_HERE"
+
+:: Optional
+::SET PSYCHO_NUMBER="YOUR_PHONE_NUMBER"
+::SET PSYCHO_TARGET="DESTINATION_PHONE_NUMBER"
+
+python psycho.py
